@@ -1,0 +1,9 @@
+dependencies {}
+
+jar.enabled(true)
+
+allprojects {
+    bootJar{
+        enabled = false
+    }
+}

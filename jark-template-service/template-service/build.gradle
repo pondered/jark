@@ -1,0 +1,9 @@
+group "com.jark.template.service"
+
+dependencies {
+    api(project(":common:utils"))
+}
+
+bootJar {
+    enabled = false
+}

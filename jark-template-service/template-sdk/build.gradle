@@ -1,0 +1,16 @@
+group "com.jark.template.sdk"
+
+dependencies {
+    compileOnly("org.springframework:spring-context")
+    compileOnly("org.springframework:spring-beans")
+    compileOnly("org.springframework:spring-core")
+    api("io.swagger.core.v3:swagger-annotations-jakarta:${SWAGGER_VERSION}")
+
+    api("org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.4.1")
+    api("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1")
+
+}
+
+bootJar {
+    enabled = false
+}

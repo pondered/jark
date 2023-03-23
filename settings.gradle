@@ -1,0 +1,41 @@
+rootProject.name = "jark-project"
+
+enableFeaturePreview("VERSION_CATALOGS")
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        mavenCentral()
+    }
+
+    pluginManagement {
+        repositories {
+            maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+            maven { url "https://maven.aliyun.com/repository/spring-plugin" }
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+    }
+}
+
+include "common"
+include "common:utils"
+findProject(":common:utils")?.name = "utils"
+include "common:tx"
+findProject(":common:tx")?.name = "tx"
+include "common:cache"
+findProject(":common:cache")?.name = "cache"
+include "common:mq"
+findProject(":common:mq")?.name = "mq"
+include "common:oss"
+findProject(":common:oss")?.name = "oss"
+include "jark-template-service"
+include "jark-template-service:template-app"
+findProject(":jark-template-service:template-app")?.name = "template-app"
+include "jark-template-service:template-service"
+findProject(":jark-template-service:template-service")?.name = "template-service"
+include "jark-template-service:template-sdk"
+findProject(":jark-template-service:template-sdk")?.name = "template-sdk"
+include "jark-gateway"
+
