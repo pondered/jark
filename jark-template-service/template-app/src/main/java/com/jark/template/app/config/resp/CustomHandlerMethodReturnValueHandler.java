@@ -57,7 +57,7 @@ public class CustomHandlerMethodReturnValueHandler implements HandlerMethodRetur
             if (returnValue instanceof R) {
                 data = returnValue;
             } else {
-                data = R.success(returnValue);
+                data = R.ok(returnValue);
             }
         }
         out.write(Objects.requireNonNull(JsonUtil.toJSON(data)));

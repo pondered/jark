@@ -82,23 +82,23 @@ public final class R<T> implements Serializable {
         this.succ = succ;
     }
 
-    public static <T> R<T> success() {
+    public static <T> R<T> ok() {
         return new R<T>(RespCode.OK, true);
     }
 
-    public static <T> R<T> success(final T data) {
+    public static <T> R<T> ok(final T data) {
         return new R<T>(RespCode.OK, true, data);
     }
 
-    public static <T> R<T> success(final int code, final T data) {
+    public static <T> R<T> ok(final int code, final T data) {
         return new R<T>(code, true, data);
     }
 
-    public static <T> R<T> success(final String msg, final T data) {
+    public static <T> R<T> ok(final String msg, final T data) {
         return new R<T>(RespCode.OK, true, msg, data);
     }
 
-    public static <T> R<T> success(final BizAssertMessage template, final T data) {
+    public static <T> R<T> ok(final BizAssertMessage template, final T data) {
         return new R<T>(template.getCode(), true, template.getName(), data);
     }
 
