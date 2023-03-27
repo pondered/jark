@@ -36,8 +36,4 @@ dependencies {
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-router")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-ratelimit")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-circuitbreaker")
-
-    testImplementation("org.freemarker:freemarker:${FREEMAKER_VERSION}")
 }
-
-

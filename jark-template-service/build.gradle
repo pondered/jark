@@ -1,5 +1,34 @@
+plugins {
+    id "com.thinkimi.gradle.MybatisGenerator" version "${MYBATISGENERATOR_VERSION}"
+}
+
 dependencies {}
 
 bootJar {
     enabled = false
 }
+
+configurations {
+    mybatisGenerator
+}
+mybatisGenerator {
+    verbose = true
+    overwrite = true
+    configFile = "${projectDir}/template-app/src/main/resources/generate/generatorConfig.xml"
+    mybatisProperties = ['driver'       : 'com.mysql.cj.jdbc.Driver',
+                         'url'          : 'jdbc:mysql://localhost:3306/nju',
+                         'username'     : 'root',
+                         'password'     : 'root',
+                         'basePackage'  : "${projectDir}",
+                         'entityPackage': '/template-sdk',
+                         'mapperPackage': '/template-service',
+                         'entity'       : 'com.jark.template.sdk.entity',
+                         'mapper'       : 'com.jark.template.manager.mapper'
+    ]
+    dependencies {
+        mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.4.2'
+        mybatisGenerator 'mysql:mysql-connector-java:8.0.31'
+        mybatisGenerator 'com.github.misterchangray.mybatis.generator.plugins:myBatisGeneratorPlugins:1.4'
+    }
+}
+
