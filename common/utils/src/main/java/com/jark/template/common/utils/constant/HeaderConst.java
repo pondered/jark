@@ -4,7 +4,7 @@ package com.jark.template.common.utils.constant;
  * 全局 请求头常量
  */
 public interface HeaderConst {
-     /**
+    /**
      * 网关请求时间统计
      */
     String X_GATEWAY_START_TIME = "x_gateway_start_time";

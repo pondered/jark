@@ -1,9 +1,9 @@
 package com.jark.template.common.utils.assertion;
 
+import com.jark.template.common.utils.exception.BaseException;
+
 import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
-
-import com.jark.template.common.utils.exception.BaseException;
 
 /**
  * 业务异常类

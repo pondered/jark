@@ -135,7 +135,7 @@ public final class JsonUtil {
      * @param object 对象
      * @return 字节
      */
-    public static byte[] toBytes(Object object) {
+    public static byte[] toBytes(final Object object) {
         if (ObjectUtil.isEmpty(object)) {
             return null;
         }
