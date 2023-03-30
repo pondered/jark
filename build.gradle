@@ -70,6 +70,8 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.junit.jupiter:junit-jupiter-api")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation "com.github.jsonzou:jmockdata:${JMOCKDATA_VERSION}"
+        testImplementation "com.aventstack:extentreports:${EXTENT_REPORT_VERSION}"
 
     }
     configurations.all {
