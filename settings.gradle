@@ -4,6 +4,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     repositories {
         mavenLocal()
+        maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://maven.aliyun.com/repository/spring" }
         maven { url "https://maven.aliyun.com/repository/google" }
@@ -30,6 +31,8 @@ include "common:mq"
 findProject(":common:mq")?.name = "mq"
 include "common:oss"
 findProject(":common:oss")?.name = "oss"
+include "common:web"
+findProject(":common:web")?.name = "web"
 include "jark-template-service"
 include "jark-template-service:template-app"
 findProject(":jark-template-service:template-app")?.name = "template-app"
