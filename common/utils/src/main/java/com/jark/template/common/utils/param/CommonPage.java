@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageParam implements Serializable {
+public class CommonPage implements Serializable {
 
     /**
      * 页面大小
