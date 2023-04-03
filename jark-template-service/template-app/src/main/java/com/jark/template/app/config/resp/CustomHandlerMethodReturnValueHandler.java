@@ -1,7 +1,9 @@
 package com.jark.template.app.config.resp;
 
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,11 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author ponder
  */
 public class CustomHandlerMethodReturnValueHandler implements HandlerMethodReturnValueHandler {
+    /**
+     * 自定义返回类缓存
+     */
+    private static final Map<Class<? extends CustomReturn>, CustomReturn> CUSTOM_RETURNS_CACHE = new ConcurrentHashMap<>(100);
+
     @Override
     public boolean supportsReturnType(final MethodParameter returnType) {
         final Class<?> containingClass = returnType.getContainingClass();
@@ -51,7 +58,14 @@ public class CustomHandlerMethodReturnValueHandler implements HandlerMethodRetur
         if (ObjectUtil.isNotEmpty(customReturnData)) {
             response.setContentType(customReturnData.contentType());
             final Class<? extends CustomReturn> clazz = customReturnData.clazz();
-            final CustomReturn customReturn = clazz.getDeclaredConstructor().newInstance();
+
+            CustomReturn customReturn = null;
+            if (CUSTOM_RETURNS_CACHE.containsKey(clazz)) {
+                customReturn = CUSTOM_RETURNS_CACHE.get(clazz);
+            } else {
+                customReturn = clazz.getDeclaredConstructor().newInstance();
+                CUSTOM_RETURNS_CACHE.put(clazz, customReturn);
+            }
             data = customReturn.of(returnValue);
         } else if (StrUtil.isEmpty(from)) {
             if (returnValue instanceof R) {
