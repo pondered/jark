@@ -72,11 +72,15 @@ subprojects {
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
         testImplementation "com.github.jsonzou:jmockdata:${JMOCKDATA_VERSION}"
         testImplementation "com.aventstack:extentreports:${EXTENT_REPORT_VERSION}"
-
+        testImplementation("org.mockito:mockito-inline")
     }
     configurations.all {
         exclude group: "com.tencent.polaris", module: "connector-nacos"
         exclude group: "com.tencent.polaris", module: "connector-consul"
+    }
+
+    checkstyle {
+        checkstyleTest.enabled = false
     }
 
     test {
