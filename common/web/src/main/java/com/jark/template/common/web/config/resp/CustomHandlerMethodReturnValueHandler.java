@@ -2,7 +2,6 @@ package com.jark.template.common.web.config.resp;
 
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.core.MethodParameter;
@@ -14,7 +13,6 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.jark.template.common.utils.constant.HeaderConst;
-import com.jark.template.common.utils.json.JsonUtil;
 import com.jark.template.common.utils.resp.R;
 import com.jark.template.common.utils.resp.custom.CustomReturn;
 import com.jark.template.common.utils.resp.custom.ReturnValue;
@@ -54,7 +52,7 @@ public class CustomHandlerMethodReturnValueHandler implements HandlerMethodRetur
         final PrintWriter out = response.getWriter();
         final ReturnValue customReturnData = returnType.getMethodAnnotation(ReturnValue.class);
 
-        Object data = null;
+        String data = "";
         if (ObjectUtil.isNotEmpty(customReturnData)) {
             response.setContentType(customReturnData.contentType());
             final Class<? extends CustomReturn> clazz = customReturnData.clazz();
@@ -68,13 +66,13 @@ public class CustomHandlerMethodReturnValueHandler implements HandlerMethodRetur
             }
             data = customReturn.of(returnValue);
         } else if (StrUtil.isEmpty(from)) {
-            if (returnValue instanceof R) {
-                data = returnValue;
+            if (returnValue instanceof R ret) {
+                data = ret.toJson();
             } else {
-                data = R.ok(returnValue);
+                data = R.ok(returnValue).toJson();
             }
         }
-        out.write(Objects.requireNonNull(JsonUtil.toJSON(data)));
+        out.write(data);
         out.close();
     }
 }
