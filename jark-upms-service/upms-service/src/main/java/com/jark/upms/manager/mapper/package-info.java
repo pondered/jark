@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.manager.mapper;
+package com.jark.upms.manager.mapper;
 

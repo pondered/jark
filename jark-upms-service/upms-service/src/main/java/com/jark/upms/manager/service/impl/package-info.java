@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.manager.service.impl;
+package com.jark.upms.manager.service.impl;
 

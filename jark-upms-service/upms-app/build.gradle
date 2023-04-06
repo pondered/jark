@@ -1,13 +1,13 @@
 apply plugin: "org.springframework.boot"
 
-group "com.jark.template.app"
+group "com.jark.upms.app"
 
 jar {
     enabled = false
 }
 bootJar {
     version = this.rootProject.version
-    mainClass = "com.jark.template.app.TemplateApplication"
+    mainClass = "com.jark.upms.app.UpmsApplication"
 }
 
 dependencies {

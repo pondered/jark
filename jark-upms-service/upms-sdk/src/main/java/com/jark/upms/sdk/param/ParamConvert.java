@@ -1,4 +1,4 @@
-package com.jark.template.sdk.param;
+package com.jark.upms.sdk.param;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

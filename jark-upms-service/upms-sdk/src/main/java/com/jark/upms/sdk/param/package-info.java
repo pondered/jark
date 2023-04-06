@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.sdk.param;
+package com.jark.upms.sdk.param;
 

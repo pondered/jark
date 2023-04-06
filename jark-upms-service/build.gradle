@@ -22,8 +22,8 @@ mybatisGenerator {
                          'basePackage'  : "${projectDir}",
                          'entityPackage': '/template-sdk',
                          'mapperPackage': '/template-service',
-                         'entity'       : 'com.jark.template.sdk.entity',
-                         'mapper'       : 'com.jark.template.manager.mapper'
+                         'entity'       : 'com.jark.upms.sdk.entity',
+                         'mapper'       : 'com.jark.upms.manager.mapper'
     ]
     dependencies {
         mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.4.2'

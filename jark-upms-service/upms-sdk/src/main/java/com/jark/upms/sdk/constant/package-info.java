@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.sdk.constant;
+package com.jark.upms.sdk.constant;
 

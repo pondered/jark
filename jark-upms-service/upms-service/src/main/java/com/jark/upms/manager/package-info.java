@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.manager;
+package com.jark.upms.manager;
 

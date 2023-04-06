@@ -6,5 +6,5 @@
  * @version
  */
 
-package com.jark.template.manager.repository.impl;
+package com.jark.upms.manager.repository.impl;
 
