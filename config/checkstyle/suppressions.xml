@@ -7,6 +7,7 @@
 
     <suppress checks="HideUtilityClassConstructor" files="TemplateApplication.java" />
     <suppress checks="HideUtilityClassConstructor" files="GatewayAppApplication.java" />
+    <suppress checks="HideUtilityClassConstructor" files="UpmsApplication.java" />
     <suppress checks="MagicNumber" files="RespCode.java"/>
     <suppress checks="BooleanExpressionComplexity" files="JsonUtil.java"/>
     <suppress checks="CyclomaticComplexity" files="JsonUtil.java"/>

@@ -1,4 +1,4 @@
-package com.jark.template.app;
+package com.jark.upms.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Ponder
  */
-@SpringBootApplication(scanBasePackages = {"com.jark.template.**"})
-public class TemplateApplication {
+@SpringBootApplication(scanBasePackages = {"com.jark.upms.**"})
+public class UpmsApplication {
 
     public static void main(final String[] args) {
-        SpringApplication springApplication = new SpringApplication(TemplateApplication.class);
+        SpringApplication springApplication = new SpringApplication(UpmsApplication.class);
         springApplication.setLazyInitialization(true);
         springApplication.run(args);
     }

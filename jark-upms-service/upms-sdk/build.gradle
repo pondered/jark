@@ -1,11 +1,11 @@
-group "com.jark.template.sdk"
+group "com.jark.upms.sdk"
 
 dependencies {
     compileOnly("org.springframework:spring-context")
     compileOnly("org.springframework:spring-beans")
     compileOnly("org.springframework:spring-core")
     compileOnly("jakarta.annotation:jakarta.annotation-api")
-    api("org.springframework.cloud:spring-cloud-openfeign-core")
+    compileOnly("org.springframework.cloud:spring-cloud-openfeign-core")
     compileOnly("io.swagger.core.v3:swagger-annotations-jakarta:${SWAGGER_VERSION}")
 }
 
