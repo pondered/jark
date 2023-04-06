@@ -13,6 +13,7 @@ dependencyResolutionManagement {
 
     pluginManagement {
         repositories {
+            maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }
             maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
             maven { url "https://maven.aliyun.com/repository/spring-plugin" }
             maven { url "https://plugins.gradle.org/m2/" }
@@ -25,6 +26,8 @@ include "common:utils"
 findProject(":common:utils")?.name = "utils"
 include "common:tx"
 findProject(":common:tx")?.name = "tx"
+include "common:logging"
+findProject(":common:logging")?.name = "logging"
 include "common:cache"
 findProject(":common:cache")?.name = "cache"
 include "common:mq"
@@ -33,12 +36,24 @@ include "common:oss"
 findProject(":common:oss")?.name = "oss"
 include "common:web"
 findProject(":common:web")?.name = "web"
+include "jark-gateway"
+include "jark-scheduler"
+
+
+// template-service
 include "jark-template-service"
-include "jark-template-service:template-app"
-findProject(":jark-template-service:template-app")?.name = "template-app"
-include "jark-template-service:template-service"
-findProject(":jark-template-service:template-service")?.name = "template-service"
 include "jark-template-service:template-sdk"
 findProject(":jark-template-service:template-sdk")?.name = "template-sdk"
-include "jark-gateway"
+include "jark-template-service:template-service"
+findProject(":jark-template-service:template-service")?.name = "template-service"
+include "jark-template-service:template-app"
+findProject(":jark-template-service:template-app")?.name = "template-app"
 
+// upms-service
+include "jark-upms-service"
+include "jark-upms-service:upms-sdk"
+findProject(":jark-upms-service:template-sdk")?.name = "upms-sdk"
+include "jark-upms-service:upms-service"
+findProject(":jark-upms-service:upms-service")?.name = "upms-service"
+include "jark-upms-service:upms-app"
+findProject(":jark-upms-service:upms-app")?.name = "upms-app"

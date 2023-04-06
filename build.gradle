@@ -65,6 +65,10 @@ subprojects {
         implementation("org.mapstruct:mapstruct:${MAPSTRUCT_VERSION}")
         annotationProcessor("org.mapstruct:mapstruct-processor:${MAPSTRUCT_VERSION}")
 
+        compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+
         testAnnotationProcessor("org.projectlombok:lombok")
         testCompileOnly("org.projectlombok:lombok")
         testImplementation("org.springframework.boot:spring-boot-starter-test")

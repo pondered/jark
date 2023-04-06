@@ -2,6 +2,7 @@
 
 ## 模块介绍
 
+scheudler : https://www.yuque.com/powerjob/guidence/bdvp1u
 
 
 ## 配置
