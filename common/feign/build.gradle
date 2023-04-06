@@ -1,0 +1,10 @@
+dependencies {
+    compileOnly(project(":common:utils"))
+    implementation("io.github.openfeign:feign-okhttp")
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+    compileOnly("org.springframework:spring-webmvc")
+    compileOnly("jakarta.servlet:jakarta.servlet-api")
+
+}

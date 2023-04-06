@@ -36,6 +36,10 @@ include "common:oss"
 findProject(":common:oss")?.name = "oss"
 include "common:web"
 findProject(":common:web")?.name = "web"
+include "common:feign"
+findProject(":common:feign")?.name = "feign"
+
+// Service
 include "jark-gateway"
 include "jark-scheduler"
 
