@@ -3,12 +3,16 @@ package com.jark.template.common.redis.lock;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.expression.Expression;
 import org.springframework.stereotype.Component;
 
 import com.jark.template.common.redis.lock.type.LockTypeFactory;
 import com.jark.template.common.redis.lock.type.Lock;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Redis锁AOP操作具体实现类。
@@ -20,9 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public final class RedisLockAspect {
 
+    /**
+     * Spel语法缓存
+     */
+    private final Map<String, Expression> keyCache = new ConcurrentHashMap<>(64);
+
     @Around("@annotation(redisLock)")
     public Object around(final ProceedingJoinPoint joinPoint, final RedisLock redisLock) throws Throwable {
-        final LockInfo lockInfo = LockInfo.get(redisLock, joinPoint);
+        final LockInfo lockInfo = LockInfo.get(keyCache, redisLock, joinPoint);
         final Lock lock = LockTypeFactory.of(lockInfo.getLockType(), lockInfo);
 
         // 获取锁
