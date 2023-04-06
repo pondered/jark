@@ -1,0 +1,25 @@
+apply plugin: "org.springframework.boot"
+
+group "com.jark.template.app"
+
+jar {
+    enabled = false
+}
+bootJar {
+    version = this.rootProject.version
+    mainClass = "com.jark.template.app.TemplateApplication"
+}
+
+dependencies {
+    implementation(project(":jark-template-service:template-service"))
+    implementation(project(":common:web"))
+    // 数据库
+    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+//    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-discovery")
+//    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-config")
+//    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-router")
+//    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-ratelimit")
+//    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-circuitbreaker")
+}
