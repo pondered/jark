@@ -21,26 +21,36 @@ dependencyResolutionManagement {
     }
 }
 
+// 组件模块
 include "common"
+// 工具包
 include "common:utils"
 findProject(":common:utils")?.name = "utils"
-include "common:tx"
-findProject(":common:tx")?.name = "tx"
+// 分布式事务
+include "common:seata"
+findProject(":common:seata")?.name = "seata"
+// 日志模块
 include "common:logging"
 findProject(":common:logging")?.name = "logging"
-include "common:cache"
-findProject(":common:cache")?.name = "cache"
-include "common:mq"
-findProject(":common:mq")?.name = "mq"
+// Redis缓存相关
+include "common:redis"
+findProject(":common:redis")?.name = "redis"
+// rabbitmq 相关
+include "common:rabbitmq"
+findProject(":common:rabbitmq")?.name = "rabbitmq"
+// 对象存储相关
 include "common:oss"
 findProject(":common:oss")?.name = "oss"
+// web配置相关
 include "common:web"
 findProject(":common:web")?.name = "web"
+// Feign配置相关
 include "common:feign"
 findProject(":common:feign")?.name = "feign"
 
-// Service
+// 网关
 include "jark-gateway"
+// 定时任务
 include "jark-scheduler"
 
 
