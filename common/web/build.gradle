@@ -1,0 +1,25 @@
+dependencies {
+
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-mysql")
+
+    compileOnly(project(":common:utils"))
+
+    implementation("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+    implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:${KNIVE4j_VERSION}") {
+        exclude module: "springdoc-openapi-starter-webflux-ui"
+        exclude module: "springdoc-openapi-starter-webflux-api"
+        exclude module: "springdoc-openapi-starter-webmvc-ui"
+        exclude module: "knife4j-openapi3-ui"
+    }
+
+    implementation("io.github.openfeign:feign-okhttp")
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-undertow")
+}
