@@ -12,24 +12,10 @@ bootJar {
 
 dependencies {
     implementation(project(":jark-template-service:template-service"))
-
+    implementation(project(":common:web"))
     // 数据库
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
-    implementation("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:${KNIVE4j_VERSION}") {
-        exclude module: "springdoc-openapi-starter-webflux-ui"
-        exclude module: "springdoc-openapi-starter-webflux-api"
-        exclude module: "springdoc-openapi-starter-webmvc-ui"
-        exclude module: "knife4j-openapi3-ui"
-    }
-    implementation("org.springframework.boot:spring-boot-starter-undertow")
 
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-discovery")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-config")

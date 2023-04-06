@@ -6,6 +6,19 @@ spring:
     lazy-initialization: true
   application:
     name: jark
+  flyway:
+    # sql文件路径
+    locations: classpath:sql/
+    # 版本管理
+    table: flyway_schema_history
+    enabled: true
+    # 是否校验
+    validate-on-migrate: true
+    clean-disabled: true
+    driver-class-name: ${spring.datasource.driverClassName}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    url: ${spring.datasource.url}
 
 logging:
   config: classpath:logback/logback-${spring.profiles.active:dev}.xml
