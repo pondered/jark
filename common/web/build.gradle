@@ -15,11 +15,6 @@ dependencies {
         exclude module: "springdoc-openapi-starter-webmvc-ui"
         exclude module: "knife4j-openapi3-ui"
     }
-
-    implementation("io.github.openfeign:feign-okhttp")
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-undertow")
 }
