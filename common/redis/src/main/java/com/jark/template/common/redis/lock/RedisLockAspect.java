@@ -1,18 +1,18 @@
 package com.jark.template.common.redis.lock;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.expression.Expression;
 import org.springframework.stereotype.Component;
 
-import com.jark.template.common.redis.lock.type.LockTypeFactory;
 import com.jark.template.common.redis.lock.type.Lock;
+import com.jark.template.common.redis.lock.type.LockTypeFactory;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Redis锁AOP操作具体实现类。
@@ -55,7 +55,7 @@ public final class RedisLockAspect {
             failFlag = false;
         }
 
-        if (failFlag) {
+        if (failFlag && redisLock.waitTime() == 0L) {
             // 释放锁
             final boolean release = lock.release();
             // 释放锁失败

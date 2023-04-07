@@ -32,7 +32,7 @@ public @interface RedisLock {
      * 失效时间。
      * 秒
      */
-    long expire();
+    long expire() default 0L;
 
     /**
      * 当业务处理出现异常时锁的处理方式

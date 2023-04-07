@@ -64,7 +64,7 @@ public class LockInfo {
             + methodName + RedisConstEnum.LOCK_NAME_SEPARATOR
             + key;
 
-        return new LockInfo(lockName, objectId, redisLock.expire(),
+        return new LockInfo(lockName, objectId, redisLock.expire() == 0L ? Long.MAX_VALUE : redisLock.expire(),
             redisLock.waitTime(), redisLock.lockType());
     }
 
