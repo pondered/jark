@@ -2,11 +2,14 @@ package com.jark.template.common.redis.utils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import com.jark.template.common.utils.tools.OptionalUtils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
@@ -63,10 +66,10 @@ public class RedisUtil {
      * @param key 键
      * @param time 时间(秒)
      */
-    public void expire(final String key, final long time) {
+    public void expire(final Optional<String> key, final long time) {
         try {
             if (time > 0) {
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+                key.map(k -> redisTemplate.expire(k, time, TimeUnit.SECONDS));
             }
         } catch (Exception e) {
             log.error("redis expire cache error", e);
@@ -80,8 +83,8 @@ public class RedisUtil {
      *
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public Long getExpire(final String key) {
-        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+    public Optional<Long> getExpire(final String key) {
+        return Optional.ofNullable(redisTemplate.getExpire(key, TimeUnit.SECONDS));
     }
 
     /**
@@ -91,15 +94,12 @@ public class RedisUtil {
      *
      * @return true 存在 false不存在
      */
-    public Boolean hasKey(final String key) {
+    public Optional<Boolean> hasKey(final Optional<String> key) {
         try {
-            if (StrUtil.isNotEmpty(key)) {
-                return redisTemplate.hasKey(key);
-            }
-            return false;
+            return key.map(redisTemplate::hasKey);
         } catch (Exception e) {
             log.error("redis hasKey error", e);
-            return false;
+            return Optional.of(false);
         }
     }
 
@@ -146,9 +146,8 @@ public class RedisUtil {
      *
      * @param patternKey 需要匹配的key，可以为正则
      */
-    public void delPattern(final String patternKey) {
-        Set<String> keys = redisTemplate.keys(patternKey);
-        redisTemplate.delete(keys);
+    public void delPattern(final Optional<String> patternKey) {
+        patternKey.map(redisTemplate::keys).map(redisTemplate::delete);
     }
 
     // ============================String=============================
@@ -160,8 +159,8 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public Object get(final String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
+    public Optional<Object> get(final Optional<String> key) {
+        return key.map(k -> Optional.ofNullable(redisTemplate.opsForValue().get(k)));
     }
 
     /**
@@ -173,8 +172,8 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public <T> T get(final String key, final Class<T> clazz) {
-        return clazz.cast(this.get(key));
+    public <T> Optional<T> get(final Optional<String> key, final Class<T> clazz) {
+        return this.get(key).map(clazz::cast);
     }
 
     /**
@@ -200,6 +199,19 @@ public class RedisUtil {
      * @return true成功 false 失败
      */
     public boolean set(final String key, final Object value, final long time) {
+        return set(key, Optional.ofNullable(value), time);
+    }
+
+    /**
+     * 普通缓存放入并设置时间
+     *
+     * @param key 键
+     * @param value 值
+     * @param time 时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     *
+     * @return true成功 false 失败
+     */
+    public boolean set(final String key, final Optional<Object> value, final long time) {
         try {
             if (time > 0) {
                 redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -221,9 +233,9 @@ public class RedisUtil {
      *
      * @return key后的长度
      */
-    public Long incr(final String key, final long delta) {
+    public Optional<Long> incr(final Optional<String> key, final long delta) {
         Assert.isTrue(delta > 0, "递增因子必须大于0");
-        return redisTemplate.opsForValue().increment(key, delta);
+        return key.map(k -> redisTemplate.opsForValue().increment(k, delta));
     }
 
     /**
@@ -234,9 +246,9 @@ public class RedisUtil {
      *
      * @return key后的长度
      */
-    public Long decr(final String key, final long delta) {
+    public Optional<Long> decr(final Optional<String> key, final long delta) {
         Assert.isTrue(delta > 0, "递增因子必须大于0");
-        return redisTemplate.opsForValue().increment(key, -delta);
+        return key.map(k -> redisTemplate.opsForValue().increment(k, -delta));
     }
 
     // ================================Map=================================
@@ -249,8 +261,8 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public Object hget(final String key, final String item) {
-        return redisTemplate.opsForHash().get(key, item);
+    public Optional<Object> hget(final Optional<String> key, final Optional<String> item) {
+        return OptionalUtils.apply(key, item, (k, i) -> redisTemplate.opsForHash().get(k, i));
     }
 
     /**
@@ -260,8 +272,8 @@ public class RedisUtil {
      *
      * @return key对应的所有内容
      */
-    public List<Object> hgets(final String key) {
-        return redisTemplate.opsForHash().values(key);
+    public Optional<List<Object>> hgets(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForHash().values(k));
     }
 
     /**
@@ -271,8 +283,8 @@ public class RedisUtil {
      *
      * @return 对应的多个键值
      */
-    public Map<Object, Object> hmget(final String key) {
-        return redisTemplate.opsForHash().entries(key);
+    public Optional<Map<Object, Object>> hmget(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForHash().entries(k));
     }
 
     /**
@@ -282,8 +294,8 @@ public class RedisUtil {
      *
      * @return key对应数据的长度
      */
-    public Long hSize(final String key) {
-        return redisTemplate.opsForHash().size(key);
+    public Optional<Long> hSize(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForHash().size(k));
     }
 
     /**
@@ -294,7 +306,7 @@ public class RedisUtil {
      *
      * @return true 成功 false 失败
      */
-    public boolean hmset(final String key, final Map<String, Object> map) {
+    public boolean hmset(final Optional<String> key, final Map<String, Object> map) {
         return this.hmset(key, map, EXPIRE_TIME);
     }
 
@@ -307,9 +319,9 @@ public class RedisUtil {
      *
      * @return true成功 false失败
      */
-    public boolean hmset(final String key, final Map<String, Object> map, final long time) {
+    public boolean hmset(final Optional<String> key, final Map<String, Object> map, final long time) {
         try {
-            redisTemplate.opsForHash().putAll(key, map);
+            key.ifPresent(k -> redisTemplate.opsForHash().putAll(k, map));
             if (time > 0) {
                 expire(key, time);
             } else {
@@ -332,7 +344,7 @@ public class RedisUtil {
      *
      * @return true 成功 false失败
      */
-    public boolean hset(final String key, final String item, final Object value) {
+    public boolean hset(final Optional<String> key, final Optional<String> item, final Optional<Object> value) {
         return this.hset(key, item, value, EXPIRE_TIME);
     }
 
@@ -346,9 +358,11 @@ public class RedisUtil {
      *
      * @return true 成功 false失败
      */
-    public boolean hset(final String key, final String item, final Object value, final long time) {
+    public boolean hset(final Optional<String> key, final Optional<String> item, final Optional<Object> value, final long time) {
         try {
-            redisTemplate.opsForHash().put(key, item, value);
+            OptionalUtils.accept(key, item, value, (k, i, v) -> {
+                redisTemplate.opsForHash().put(k, i, v);
+            });
             if (time > 0) {
                 expire(key, time);
             } else {
@@ -369,8 +383,8 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public Object hdel(final String key, final Object... item) {
-        return redisTemplate.opsForHash().delete(key, item);
+    public Optional<Object> hdel(final Optional<String> key, final Object... item) {
+        return key.map(k -> redisTemplate.opsForHash().delete(k, item));
     }
 
     /**
@@ -381,8 +395,8 @@ public class RedisUtil {
      *
      * @return true 存在 false不存在
      */
-    public boolean hHasKey(final String key, final String item) {
-        return redisTemplate.opsForHash().hasKey(key, item);
+    public Optional<Boolean> hHasKey(final Optional<String> key, final Optional<String> item) {
+        return OptionalUtils.apply(key, item, (k, i) -> redisTemplate.opsForHash().hasKey(k, i));
     }
 
     /**
@@ -395,10 +409,12 @@ public class RedisUtil {
      *
      * @return key的位置
      */
-    public Double hincr(final String key, final String item, final Double by) {
-        Double increment = redisTemplate.opsForHash().increment(key, item, by);
-        expire(key, EXPIRE_TIME);
-        return increment;
+    public Optional<Double> hincr(final Optional<String> key, final Optional<String> item, final Double by) {
+        return OptionalUtils.apply(key, item, (k, i) -> {
+            final Double increment = redisTemplate.opsForHash().increment(k, i, by);
+            expire(key, EXPIRE_TIME);
+            return increment;
+        });
     }
 
     /**
@@ -411,10 +427,12 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public Double hdecr(final String key, final String item, final Double by) {
-        Double increment = redisTemplate.opsForHash().increment(key, item, -by);
-        expire(key, EXPIRE_TIME);
-        return increment;
+    public Optional<Double> hdecr(final Optional<String> key, final Optional<String> item, final Double by) {
+        return OptionalUtils.apply(key, item, (k, i) -> {
+            final Double increment = redisTemplate.opsForHash().increment(k, i, -by);
+            expire(key, EXPIRE_TIME);
+            return increment;
+        });
     }
 
     // ============================set=============================
@@ -426,13 +444,8 @@ public class RedisUtil {
      *
      * @return 所有不重复的数据
      */
-    public Set<Object> sGet(final String key) {
-        try {
-            return redisTemplate.opsForSet().members(key);
-        } catch (Exception e) {
-            log.error("redis sGet key:{} error", key, e);
-            return null;
-        }
+    public Optional<Set<Object>> sGet(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForSet().members(k));
     }
 
     /**
@@ -443,13 +456,8 @@ public class RedisUtil {
      *
      * @return true 存在 false不存在
      */
-    public boolean sHasKey(final String key, final Object value) {
-        try {
-            return redisTemplate.opsForSet().isMember(key, value);
-        } catch (Exception e) {
-            log.error("redis sHasKey key:{},value:{} error", key, value, e);
-            return false;
-        }
+    public Optional<Boolean> sHasKey(final Optional<String> key, final Optional<Object> value) {
+        return OptionalUtils.apply(key, value, (k, v) -> redisTemplate.opsForSet().isMember(k, v));
     }
 
     /**
@@ -461,15 +469,12 @@ public class RedisUtil {
      *
      * @return 成功个数
      */
-    public long sSet(final String key, final Object... values) {
-        try {
-            Long add = redisTemplate.opsForSet().add(key, values);
+    public Optional<Long> sSet(final Optional<String> key, final Object... values) {
+        return key.map(k -> {
+            final Long add = redisTemplate.opsForSet().add(k, values);
             expire(key, EXPIRE_TIME);
             return add;
-        } catch (Exception e) {
-            log.error("redis sSet key:{},value:{} error", key, values, e);
-            return 0;
-        }
+        });
     }
 
     /**
@@ -481,19 +486,12 @@ public class RedisUtil {
      *
      * @return 成功个数
      */
-    public long sSetAndTime(final String key, final long time, final Object... values) {
-        try {
-            Long count = redisTemplate.opsForSet().add(key, values);
-            if (time > 0) {
-                expire(key, time);
-            } else {
-                expire(key, EXPIRE_TIME);
-            }
+    public Optional<Long> sSetAndTime(final Optional<String> key, final long time, final Object... values) {
+        return key.map(k -> {
+            final Long count = redisTemplate.opsForSet().add(k, values);
+            expire(key, time);
             return count;
-        } catch (Exception e) {
-            log.error("redis sSetAndTime key:{},value:{},time:{} error", key, values, time, e);
-            return 0;
-        }
+        });
     }
 
     /**
@@ -503,13 +501,8 @@ public class RedisUtil {
      *
      * @return 长度
      */
-    public long sGetSetSize(final String key) {
-        try {
-            return redisTemplate.opsForSet().size(key);
-        } catch (Exception e) {
-            log.error("redis sGetSetSize key:{}  error", key, e);
-            return 0;
-        }
+    public Optional<Long> sGetSetSize(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForSet().size(k));
     }
 
     /**
@@ -520,14 +513,8 @@ public class RedisUtil {
      *
      * @return 移除的个数
      */
-    public long setRemove(final String key, final Object... values) {
-        try {
-            Long count = redisTemplate.opsForSet().remove(key, values);
-            return count;
-        } catch (Exception e) {
-            log.error("redis setRemove key:{},value:{} error", key, values, e);
-            return 0;
-        }
+    public Optional<Long> setRemove(final Optional<String> key, final Object... values) {
+        return key.map(k -> redisTemplate.opsForSet().remove(k, values));
     }
     // ===============================list=================================
 
@@ -540,13 +527,8 @@ public class RedisUtil {
      *
      * @return 所有数据
      */
-    public List<Object> lGet(final String key, final long start, final long end) {
-        try {
-            return redisTemplate.opsForList().range(key, start, end);
-        } catch (Exception e) {
-            log.error("redis lGet key:{},start:{},end:{} error", key, start, end, e);
-            return null;
-        }
+    public Optional<List<Object>> lGet(final Optional<String> key, final long start, final long end) {
+        return key.map(k -> redisTemplate.opsForList().range(k, start, end));
     }
 
     /**
@@ -556,13 +538,8 @@ public class RedisUtil {
      *
      * @return 长度
      */
-    public long lGetListSize(final String key) {
-        try {
-            return redisTemplate.opsForList().size(key);
-        } catch (Exception e) {
-            log.error("redis lGetListSize key:{} error", key, e);
-            return 0;
-        }
+    public Optional<Long> lGetListSize(final Optional<String> key) {
+        return key.map(k -> redisTemplate.opsForList().size(k));
     }
 
     /**
@@ -573,13 +550,8 @@ public class RedisUtil {
      *
      * @return 返回数据
      */
-    public Object lGetIndex(final String key, final long index) {
-        try {
-            return redisTemplate.opsForList().index(key, index);
-        } catch (Exception e) {
-            log.error("redis lGetIndex key:{},index:{} error", key, index, e);
-            return null;
-        }
+    public Optional<Object> lGetIndex(final Optional<String> key, final long index) {
+        return key.map(k -> redisTemplate.opsForList().index(k, index));
     }
 
     /**
@@ -591,7 +563,7 @@ public class RedisUtil {
      *
      * @return true：成功
      */
-    public boolean lSet(final String key, final Object value) {
+    public Optional<Long> lSet(final Optional<String> key, final Optional<Object> value) {
         return this.lSet(key, value, EXPIRE_TIME);
     }
 
@@ -604,19 +576,16 @@ public class RedisUtil {
      *
      * @return true：成功
      */
-    public boolean lSet(final String key, final Object value, final long time) {
-        try {
-            redisTemplate.opsForList().rightPush(key, value);
+    public Optional<Long> lSet(final Optional<String> key, final Optional<Object> value, final long time) {
+        return OptionalUtils.apply(key, value, (k, v) -> {
+            final Long count = redisTemplate.opsForList().rightPush(k, v);
             if (time > 0) {
                 expire(key, time);
             } else {
                 expire(key, EXPIRE_TIME);
             }
-            return true;
-        } catch (Exception e) {
-            log.error("redis lset key:{},value:{},time:{} error", key, value, time, e);
-            return false;
-        }
+            return count;
+        });
     }
 
     /**
@@ -628,7 +597,7 @@ public class RedisUtil {
      *
      * @return true：成功
      */
-    public boolean lSet(final String key, final List<Object> value) {
+    public Optional<Long> lSet(final Optional<String> key, final List<Object> value) {
         return this.lSet(key, value, EXPIRE_TIME);
     }
 
@@ -641,19 +610,16 @@ public class RedisUtil {
      *
      * @return true: 成功
      */
-    public boolean lSet(final String key, final List<Object> value, final long time) {
-        try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+    public Optional<Long> lSet(final Optional<String> key, final List<Object> value, final long time) {
+        return key.map(k -> {
+            final Long count = redisTemplate.opsForList().rightPush(k, value);
             if (time > 0) {
                 expire(key, time);
             } else {
                 expire(key, EXPIRE_TIME);
             }
-            return true;
-        } catch (Exception e) {
-            log.error("redis lSet key:{},value:{},time:{} error", key, value, time, e);
-            return false;
-        }
+            return count;
+        });
     }
 
     /**
@@ -662,18 +628,12 @@ public class RedisUtil {
      * @param key 键
      * @param index 索引
      * @param value 值
-     *
-     * @return true:修改成功
      */
-    public boolean lUpdateIndex(final String key, final long index, final Object value) {
-        try {
-            redisTemplate.opsForList().set(key, index, value);
+    public void lUpdateIndex(final Optional<String> key, final Optional<Long> index, final Optional<Object> value) {
+        OptionalUtils.accept(key, index, value, (k, i, v) -> {
+            redisTemplate.opsForList().set(k, i, v);
             expire(key, EXPIRE_TIME);
-            return true;
-        } catch (Exception e) {
-            log.error("redis lUpdateIndex key:{},value:{},index:{} error", key, value, index, e);
-            return false;
-        }
+        });
     }
 
     /**
@@ -685,14 +645,7 @@ public class RedisUtil {
      *
      * @return 移除的个数
      */
-    public long lRemove(final String key, final long count, final Object value) {
-        try {
-            Long remove;
-            remove = redisTemplate.opsForList().remove(key, count, value);
-            return remove;
-        } catch (Exception e) {
-            log.error("redis lRemove key:{},value:{},count:{} error", key, value, count, e);
-            return 0;
-        }
+    public Optional<Long> lRemove(final Optional<String> key, final Optional<Long> count, final Optional<Object> value) {
+        return OptionalUtils.apply(key, count, value, (k, c, v) -> redisTemplate.opsForList().remove(k, c, v));
     }
 }
