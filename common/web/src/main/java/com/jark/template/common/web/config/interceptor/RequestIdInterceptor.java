@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 /**
  * @author ponder
  */
@@ -22,12 +24,12 @@ public class RequestIdInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
-        final String from = request.getHeader(HeaderConst.FROM);
+        final Optional<String> from = Optional.ofNullable(request.getHeader(HeaderConst.FROM));
         final String requestId = StrUtil.nullToDefault(response.getHeader(HeaderConst.REQUEST_ID), request.getHeader(HeaderConst.REQUEST_ID));
         MDCUtil.setRequestId(requestId);
         response.setHeader(HeaderConst.X_SERVER_START_TIME, String.valueOf(System.currentTimeMillis()));
         response.setHeader(HeaderConst.REQUEST_ID, MDCUtil.getRequestId());
-        if (StrUtil.isEmpty(from)) {
+        if (from.isPresent()) {
             log.info("用户请求路径为:{}", request.getRequestURL());
         } else {
             log.info("{}服务调用请求路径为:{}", from, request.getRequestURL());

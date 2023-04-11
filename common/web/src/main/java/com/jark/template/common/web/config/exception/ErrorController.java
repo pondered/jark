@@ -1,6 +1,7 @@
 package com.jark.template.common.web.config.exception;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -30,11 +31,11 @@ public final class ErrorController extends AbstractErrorController {
 
     @RequestMapping("error")
     public ResponseEntity<Map<String, Object>> error(final HttpServletRequest request, final HttpServletResponse response) {
-        final String requestId = response.getHeader(HeaderConst.REQUEST_ID);
+        final Optional<String> requestId = Optional.of(response.getHeader(HeaderConst.REQUEST_ID));
         final HttpStatus status = getStatus(request);
         log.error("用户请求异常:{},参数:{},status:{}", request.getRequestURI(), request.getQueryString(), status);
         final R<Void> result = R.fail(Integer.parseInt("10" + status.value()), status.name());
-        result.setRequestId(requestId);
+        result.setRequestId(requestId.get());
         return ResponseEntity.ok(result.toMap());
     }
 

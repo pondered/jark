@@ -2,13 +2,13 @@ package com.jark.template.common.web.config.convert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 
 import cn.hutool.core.date.DateTime;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -26,10 +26,7 @@ public class ConvertConfiguration {
         return new Converter<String, LocalDateTime>() {
             @Override
             public LocalDateTime convert(final String source) {
-                if (StrUtil.isEmpty(source)) {
-                    return null;
-                }
-                return new DateTime(source).toLocalDateTime();
+                return Optional.ofNullable(source).map(s -> new DateTime(s).toLocalDateTime()).orElse(null);
             }
         };
     }
@@ -42,10 +39,7 @@ public class ConvertConfiguration {
         return new Converter<String, LocalDate>() {
             @Override
             public LocalDate convert(final String source) {
-                if (StrUtil.isEmpty(source)) {
-                    return null;
-                }
-                return new DateTime(source).toLocalDateTime().toLocalDate();
+                return Optional.ofNullable(source).map(s -> new DateTime(s).toLocalDateTime().toLocalDate()).orElse(null);
             }
         };
     }
