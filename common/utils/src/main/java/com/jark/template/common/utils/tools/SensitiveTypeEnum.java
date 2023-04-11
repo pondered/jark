@@ -1,11 +1,9 @@
 package com.jark.template.common.utils.tools;
 
 /**
- * @author xiaobin·zhou
  * @description: 敏感信息枚举类
  * @date 2021/9/21 15:43
  */
-
 public enum SensitiveTypeEnum {
 
     /**

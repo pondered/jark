@@ -3,7 +3,6 @@ package com.jark.template.common.utils.tools;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * @author xiaobin·zhou
  * @description: 通用脱敏工具类
  * @date 2021/9/21 15:39
  */

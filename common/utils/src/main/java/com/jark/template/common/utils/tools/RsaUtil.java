@@ -17,7 +17,6 @@ import cn.hutool.core.codec.Base64;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author jayden
  * @date 2022/3/3011:30
  */
 @Slf4j
