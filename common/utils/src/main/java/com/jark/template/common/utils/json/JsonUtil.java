@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -68,7 +69,7 @@ public final class JsonUtil {
         simpleModule.addSerializer(Long.class, new LongSerializer());
         simpleModule.addSerializer(Long.TYPE, new LongSerializer());
         simpleModule.addSerializer(BigDecimal.class, new BigDecimalSerializer());
-        OBJECT_MAPPER.registerModule(javaTimeModule).registerModule(simpleModule);
+        OBJECT_MAPPER.registerModule(javaTimeModule).registerModule(simpleModule).registerModule(new Jdk8Module());
         //默认开启：如果一个类没有public的方法或属性时，会导致序列化失败。关闭后，会得到一个空JSON串。
         OBJECT_MAPPER.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         //默认关闭，即使用BigDecimal.toString()序列化。开启后，使用BigDecimal.toPlainString序列化，不输出科学计数法的值。
