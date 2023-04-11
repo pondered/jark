@@ -10,7 +10,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * 业务断言工具类
+ * 业务断言 工具类
  */
 public final class BizAssert {
     private BizAssert() {
