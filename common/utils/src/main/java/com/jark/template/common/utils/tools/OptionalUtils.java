@@ -5,6 +5,9 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
+import com.jark.template.common.utils.function.Consumer3;
+import com.jark.template.common.utils.function.Function3;
+
 /**
  * Optional 工具类
  */
@@ -28,7 +31,7 @@ public final class OptionalUtils {
      * 支持三个Optional方法参数
      */
     public static <T, U, V, R> Optional<R> apply(final Optional<T> opt1, final Optional<U> opt2, final Optional<V> opt3,
-                                                 final TriFunction<T, U, V, R> mapper) {
+                                                 final Function3<T, U, V, R> mapper) {
         if (Stream.of(opt1, opt2, opt3).allMatch(Optional::isPresent)) {
             return Optional.ofNullable(mapper.apply(opt1.get(), opt2.get(), opt3.get()));
         }
@@ -49,7 +52,7 @@ public final class OptionalUtils {
     /**
      * 支持三个Optional方法参数
      */
-    public static <T, U, V> void accept(final Optional<T> opt1, final Optional<U> opt2, final Optional<V> opt3, final TriConsumer<T, U, V> mapper) {
+    public static <T, U, V> void accept(final Optional<T> opt1, final Optional<U> opt2, final Optional<V> opt3, final Consumer3<T, U, V> mapper) {
         if (Stream.of(opt1, opt2, opt3).allMatch(Optional::isPresent)) {
             mapper.accept(opt1.get(), opt2.get(), opt3.get());
         }
