@@ -4,11 +4,20 @@
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-
-    <suppress checks="HideUtilityClassConstructor" files="TemplateApplication.java" />
-    <suppress checks="HideUtilityClassConstructor" files="GatewayAppApplication.java" />
-    <suppress checks="HideUtilityClassConstructor" files="UpmsApplication.java" />
-    <suppress checks="HideUtilityClassConstructor" files="SchedulerApplication.java" />
+    <suppress checks="HideUtilityClassConstructor" files="TemplateApplication.java"/>
+    <suppress checks="HideUtilityClassConstructor" files="GatewayAppApplication.java"/>
+    <suppress checks="HideUtilityClassConstructor" files="UpmsApplication.java"/>
+    <suppress checks="HideUtilityClassConstructor" files="SchedulerApplication.java"/>
+    <suppress checks="." files="Tuple.java"/>
+    <suppress checks="." files="Tuple0.java"/>
+    <suppress checks="." files="Tuple1.java"/>
+    <suppress checks="." files="Tuple2.java"/>
+    <suppress checks="." files="Tuple3.java"/>
+    <suppress checks="." files="Tuple4.java"/>
+    <suppress checks="." files="Function3.java"/>
+    <suppress checks="." files="Function4.java"/>
+    <suppress checks="." files="Consumer3.java"/>
+    <suppress checks="." files="Consumer4.java"/>
     <suppress checks="MagicNumber" files="RespCode.java"/>
     <suppress checks="BooleanExpressionComplexity" files="JsonUtil.java"/>
     <suppress checks="CyclomaticComplexity" files="JsonUtil.java"/>
