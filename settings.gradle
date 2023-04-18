@@ -22,36 +22,36 @@ dependencyResolutionManagement {
 }
 
 // 组件模块
-include "common"
+include "jark-common"
 // 工具包
-include "common:utils"
-findProject(":common:utils")?.name = "utils"
+include "jark-common:utils"
+findProject(":jark-common:utils")?.name = "utils"
 // 分布式事务
-include "common:seata"
-findProject(":common:seata")?.name = "seata"
+include "jark-common:tx"
+findProject(":jark-common:tx")?.name = "tx"
 // 日志模块
-include "common:logging"
-findProject(":common:logging")?.name = "logging"
+include "jark-common:logging"
+findProject(":jark-common:logging")?.name = "logging"
 // Redis缓存相关
-include "common:redis"
-findProject(":common:redis")?.name = "redis"
-// rabbitmq 相关
-include "common:rabbitmq"
-findProject(":common:rabbitmq")?.name = "rabbitmq"
+include "jark-common:redis"
+findProject(":jark-common:redis")?.name = "redis"
+// mq 相关
+include "jark-common:mq"
+findProject(":jark-common:mq")?.name = "mq"
 // 对象存储相关
-include "common:oss"
-findProject(":common:oss")?.name = "oss"
+include "jark-common:oss"
+findProject(":jark-common:oss")?.name = "oss"
 // web配置相关
-include "common:web"
-findProject(":common:web")?.name = "web"
+include "jark-common:web"
+findProject(":jark-common:web")?.name = "web"
 // Feign配置相关
-include "common:feign"
-findProject(":common:feign")?.name = "feign"
+include "jark-common:feign"
+findProject(":jark-common:feign")?.name = "feign"
 
 // 网关
 include "jark-gateway"
 // 定时任务
-include "jark-scheduler"
+//include "jark-scheduler"
 
 
 // template-service

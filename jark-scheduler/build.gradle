@@ -9,16 +9,18 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    version = this.rootProject.version
+    mainClass = "com.jark.scheduler.app.SchedulerApplication"
+}
+
 dependencies {
     api(project(":jark-common:utils"))
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-discovery")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-config")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-router")
 //    implementation("com.tencent.cloud:spring-cloud-starter-tencent-polaris-ratelimit")
-
-    implementation("com.github.xiaoymin:knife4j-gateway-spring-boot-starter:${KNIVE4j_VERSION}")
+    implementation "tech.powerjob:powerjob-worker-spring-boot-starter:${POWERJOB_VERSION}"
 }

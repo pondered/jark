@@ -4,6 +4,9 @@
 
 scheudler : https://www.yuque.com/powerjob/guidence/bdvp1u
 
+## 
+数据库高可用
+MySQL 主从
 
 ## 配置
 

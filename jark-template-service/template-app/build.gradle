@@ -12,8 +12,8 @@ bootJar {
 
 dependencies {
     implementation(project(":jark-template-service:template-service"))
-    implementation(project(":common:web"))
-    implementation(project(":common:feign"))
+    implementation(project(":jark-common:web"))
+    implementation(project(":jark-common:feign"))
     // 数据库
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")

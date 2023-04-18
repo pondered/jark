@@ -1,5 +1,5 @@
 dependencies {
-    compileOnly(project(":common:utils"))
+    compileOnly(project(":jark-common:utils"))
     implementation("io.github.openfeign:feign-okhttp")
     implementation("com.squareup.okhttp3:okhttp")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")

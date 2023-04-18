@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-app
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  config: classpath:logback/logback-${spring.profiles.active}.xml

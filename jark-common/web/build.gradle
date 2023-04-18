@@ -3,7 +3,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
 
-    compileOnly(project(":common:utils"))
+    compileOnly(project(":jark-common:utils"))
 
     implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
