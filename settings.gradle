@@ -47,7 +47,12 @@ findProject(":jark-common:web")?.name = "web"
 // Feign配置相关
 include "jark-common:feign"
 findProject(":jark-common:feign")?.name = "feign"
-
+// log配置相关
+include "jark-common:log"
+findProject(":jark-common:log")?.name = "log"
+// mybatis配置相关
+include "jark-common:mybatis"
+findProject(":jark-common:mybatis")?.name = "mybatis"
 // 网关
 include "jark-gateway"
 // 定时任务
