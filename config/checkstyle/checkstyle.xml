@@ -58,11 +58,11 @@
     <module name="FileTabCharacter"/>
 
     <!-- 添加自定义规则,检查回车换行 -->
-<!--    <module name="RegexpMultiline">-->
-<!--        <property name="severity" value="warning"/>-->
-<!--        <property name="format" value="(?s:(\r\n|\r).*)"/>-->
-<!--        <property name="message" value="请使用Unix换行符。"/>-->
-<!--    </module>-->
+    <!--    <module name="RegexpMultiline">-->
+    <!--        <property name="severity" value="warning"/>-->
+    <!--        <property name="format" value="(?s:(\r\n|\r).*)"/>-->
+    <!--        <property name="message" value="请使用Unix换行符。"/>-->
+    <!--    </module>-->
 
     <!--<module name="RegexpSingleline"> <property name="format" value="\s+$"/> <property name="message" value="行尾有空白字符。"/> -->
     <!-- 只检查非java的。java的检查在RegexpSinglelineJava -->
@@ -466,7 +466,7 @@
             <property name="severity" value="info"/>
         </module>
         <module name="ClassDataAbstractionCoupling">
-            <property name="max" value="15" />
+            <property name="max" value="15"/>
             <property name="severity" value="warning"/>
         </module>
         <module name="ClassFanOutComplexity">
@@ -551,12 +551,16 @@
         <module name="CatchParameterName">
             <property name="severity" value="warning"/>
         </module>
-        <module name="ClassTypeParameterName"/>
+        <module name="ClassTypeParameterName">
+            <property name="format" value="(^[A-Z0-9]*$)"/>
+        </module>
         <!-- constants (static,  final fields) -->
         <module name="ConstantName">
             <property name="severity" value="warning"/>
         </module>
-        <module name="InterfaceTypeParameterName"/>
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="(^[A-Z0-9]*$)"/>
+        </module>
         <module name="LambdaParameterName">
             <property name="severity" value="warning"/>
         </module>

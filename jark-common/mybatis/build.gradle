@@ -1,3 +1,5 @@
 dependencies {
-
+    compileOnly("org.springframework:spring-tx")
+    api("org.mybatis.dynamic-sql:mybatis-dynamic-sql:${MYBATIS_DYNAMIC_VERSION}")
+    api("org.mybatis.spring.boot:mybatis-spring-boot-starter:${MYBATIS_SPRING_VERSION}")
 }
