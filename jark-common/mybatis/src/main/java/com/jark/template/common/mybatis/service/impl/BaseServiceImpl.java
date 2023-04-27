@@ -27,20 +27,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity<T>, R extends BaseRep
         return baseRepository.selectById(id);
     }
 
-    @Override
-    public int save(final T entity) {
-        return baseRepository.save(entity);
-    }
-
-    @Override
-    public boolean deleteById(final ID id) {
-        return baseRepository.deleteById(id);
-    }
-
-    @Override
-    public int updateById(final T entity) {
-        return baseRepository.updateById(entity);
-    }
 }
 
 

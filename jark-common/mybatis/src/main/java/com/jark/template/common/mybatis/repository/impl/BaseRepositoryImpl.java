@@ -49,7 +49,7 @@ public abstract class BaseRepositoryImpl<T extends BaseEntity<T>, M extends Base
     }
 
     @Override
-    public boolean deleteById(final ID id) {
+    public int deleteById(final ID id) {
         return baseMapper.deleteByPrimaryKey(id);
     }
 
