@@ -1,4 +1,4 @@
 dependencies {
-    api(project(":jark-common:utils"))
+    compileOnly(project(":jark-common:utils"))
     api("org.springframework.boot:spring-boot-starter-data-redis")
 }
