@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies {
-    api(project(":jark-common:utils"))
+    implementation(project(":jark-common:redis"))
+    implementation(project(":jark-common:utils"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")

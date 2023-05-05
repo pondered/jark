@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
@@ -21,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequiredArgsConstructor
 public class ReturnValueConfig implements InitializingBean {
 
     private final RequestMappingHandlerAdapter requestMappingHandlerAdapter;

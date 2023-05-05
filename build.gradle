@@ -6,7 +6,7 @@ plugins {
     id "project-report"
     id "java-library"
     id "checkstyle"
-    id "org.springframework.boot" version "3.0.2" apply false
+    id "org.springframework.boot" version "3.0.6" apply false
     id "io.spring.dependency-management" version "1.1.0"
     id "it.nicolasfarabegoli.conventional-commits" version "3.1.0"
 }
@@ -56,6 +56,7 @@ subprojects {
             mavenBom "org.springframework.boot:spring-boot-dependencies:$SPRING_BOOT_VERSION"
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:$SPRING_CLOUD_VERSION"
             mavenBom "com.tencent.cloud:spring-cloud-tencent-dependencies:${SPRING_CLOUD_TENCENT_VERSION}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${SPRING_CLOUD_ALIBABA_VERSION}"
         }
     }
 

@@ -1,10 +1,12 @@
 package com.jark.template.common.utils.tools;
 
+import static com.jark.template.common.utils.constant.HeaderConst.REQUEST_ID;
+import static com.jark.template.common.utils.constant.HeaderConst.SPAN_ID;
+import static com.jark.template.common.utils.constant.HeaderConst.TRACE_ID;
+
 import java.util.Map;
 
 import org.slf4j.MDC;
-
-import com.jark.template.common.utils.constant.HeaderConst;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
@@ -17,31 +19,26 @@ public final class MDCUtil {
     private MDCUtil() {
     }
 
-    public static void init() {
-        setRequestId();
+    public static void addTrace() {
+        MDC.put(REQUEST_ID, IdUtil.objectId());
+        MDC.put(TRACE_ID, IdUtil.objectId());
+        MDC.put(SPAN_ID, IdUtil.objectId());
     }
 
-
     public static String getRequestId() {
-        return MDC.get(HeaderConst.REQUEST_ID);
+        return MDC.get(REQUEST_ID);
     }
 
     public static void setRequestId(final String requestId) {
         if (StrUtil.isEmpty(requestId)) {
-            MDC.put(HeaderConst.REQUEST_ID, IdUtil.objectId());
+            MDC.put(REQUEST_ID, IdUtil.objectId());
         } else {
-            MDC.put(HeaderConst.REQUEST_ID, requestId);
+            MDC.put(REQUEST_ID, requestId);
         }
     }
 
-    /**
-     * 一个用户完整的请求流程
-     */
-    public static void setRequestId() {
-        final String requestId = MDC.get(HeaderConst.REQUEST_ID);
-        if (StrUtil.isEmpty(requestId)) {
-            MDC.put(HeaderConst.REQUEST_ID, IdUtil.objectId());
-        }
+    public static String nextSpanId() {
+        return StrUtil.format("{}.{}", MDC.get(SPAN_ID), IdUtil.objectId());
     }
 
     public static Map<String, String> getCopyOfContextMap() {
@@ -51,7 +48,6 @@ public final class MDCUtil {
     public static void setContextMap(final Map<String, String> contextMap) {
         MDC.setContextMap(contextMap);
     }
-
 
     public static void clear() {
         MDC.clear();

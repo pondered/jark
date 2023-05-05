@@ -30,7 +30,7 @@ MySQL 主从
 本项目使用构造器注入并使用懒加载提高项目启动速度，禁止使用其他注入方式
 
 ```java
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequiredArgsConstructor
 ```
 
 ### 缩进
@@ -81,3 +81,21 @@ Git代码提交Commit规范
 https://juejin.cn/post/6877462747631026190
 
 https://www.conventionalcommits.org/zh-hans/v1.0.0/#%e7%ba%a6%e5%ae%9a%e5%bc%8f%e6%8f%90%e4%ba%a4%e8%a7%84%e8%8c%83
+
+
+## 服务介绍
+### upms
+统一权限管理
+
+### uua
+统一认证
+
+[//]: # (### ur)
+
+[//]: # (统一授权)
+
+### push
+远程接口调用
+
+### tm
+txlcn 事务管理器

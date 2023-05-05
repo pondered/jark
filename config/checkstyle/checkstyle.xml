@@ -97,6 +97,11 @@
             <property name="message" value="禁止使用copyProperties,而是使用 Mapstruct "/>
             <property name="ignoreComments" value="true"/>
         </module>
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="\.convert\(\)"/>
+            <property name="message" value="禁止使用convert,而是使用 Mapstruct "/>
+            <property name="ignoreComments" value="true"/>
+        </module>
 
         <module name="Regexp">
             <property name="illegalPattern" value="true"/>

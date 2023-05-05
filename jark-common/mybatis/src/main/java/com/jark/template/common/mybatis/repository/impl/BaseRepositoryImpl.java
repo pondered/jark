@@ -10,6 +10,8 @@ import com.jark.template.common.mybatis.repository.BaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * Repository 抽象类
  *
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * @param <ID> 主键Id
  */
 @Slf4j
+@Repository
 @RequiredArgsConstructor
 public abstract class BaseRepositoryImpl<T extends BaseEntity<T>, M extends BaseMapper<T, ID>, ID> implements BaseRepository<T, ID> {
 

@@ -311,6 +311,17 @@ public class RedisUtil {
     }
 
     /**
+     * HashSet 默认为一天
+     *
+     * @param key 键
+     * @param hashKey 键
+     * @param value 值
+     */
+    public void hmset(final Optional<String> key, final String hashKey, final Object value) {
+        key.ifPresent(k -> redisTemplate.opsForHash().put(key.get(), hashKey, value));
+    }
+
+    /**
      * HashSet 并设置时间
      *
      * @param key 键
@@ -383,7 +394,7 @@ public class RedisUtil {
      *
      * @return 值
      */
-    public Optional<Object> hdel(final Optional<String> key, final Object... item) {
+    public Optional<Long> hdel(final Optional<String> key, final Object... item) {
         return key.map(k -> redisTemplate.opsForHash().delete(k, item));
     }
 

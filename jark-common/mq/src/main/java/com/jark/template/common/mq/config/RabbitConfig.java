@@ -5,22 +5,21 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import com.jark.template.common.mq.convert.RabbitJackJsonConverter;
 import com.jark.template.common.mq.tracing.MDCMessagePostProcess;
 import com.jark.template.common.mq.tracing.MDCReceivePostProcessors;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author ponder
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequiredArgsConstructor
 public final class RabbitConfig {
     private final RabbitTemplate rabbitTemplate;
 

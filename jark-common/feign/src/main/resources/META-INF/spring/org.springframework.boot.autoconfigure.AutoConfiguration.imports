@@ -1,1 +1,1 @@
-com.jark.template.common.web.WebAutoConfiguration
+com.jark.template.common.web.FeignConfiguration

@@ -3,9 +3,10 @@ package com.jark.template.common.web;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.jark.template.common.web.config.feign.FeignBeforeInterceptor;
-import com.jark.template.common.web.config.feign.FeignMappingDefaultConfiguration;
-import com.jark.template.common.web.config.feign.FeignResponseDecoder;
+import com.jark.template.common.web.config.FeignBeforeInterceptor;
+import com.jark.template.common.web.config.FeignMappingDefaultConfiguration;
+import com.jark.template.common.web.config.FeignResponseDecoder;
+import com.jark.template.common.web.config.FeignTraceConfig;
 
 /**
  * 配置
@@ -13,7 +14,7 @@ import com.jark.template.common.web.config.feign.FeignResponseDecoder;
 @Configuration
 @Import({
     FeignBeforeInterceptor.class,
-    FeignConfiguration.class,
+    FeignTraceConfig.class,
     FeignMappingDefaultConfiguration.class,
     FeignResponseDecoder.class,
 })

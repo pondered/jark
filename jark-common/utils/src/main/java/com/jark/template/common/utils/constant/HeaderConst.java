@@ -39,6 +39,10 @@ public interface HeaderConst {
      */
     String REQUEST_ID = "requestId";
 
+    String TRACE_ID = "traceId";
+
+    String SPAN_ID = "spanId";
+
     /**
      * 请求来源时长
      */

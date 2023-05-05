@@ -1,4 +1,4 @@
-package com.jark.template.common.web.config.feign;
+package com.jark.template.common.web.config;
 
 import java.io.IOException;
 import java.io.InputStream;

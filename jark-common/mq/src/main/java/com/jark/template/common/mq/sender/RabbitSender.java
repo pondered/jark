@@ -1,7 +1,6 @@
 package com.jark.template.common.mq.sender;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.jark.template.common.mq.constant.ExchangeEnum;
@@ -18,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequiredArgsConstructor
 public class RabbitSender {
 
     private final RabbitTemplate template;
@@ -28,7 +27,6 @@ public class RabbitSender {
      *
      * @param content 发送内容
      * @param queueEnum 发送的queue名称
-     *
      */
     public void send(Object content, QueueEnum queueEnum) {
         log.info("send message, content:{},queueEnum:{}", content, queueEnum.getName());

@@ -1,4 +1,4 @@
-package com.jark.template.common.web.config.feign;
+package com.jark.template.common.web.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
