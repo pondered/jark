@@ -21,9 +21,10 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import com.github.xiaoymin.knife4j.spring.gateway.pojo.Knife4jGatewayRoute;
 
 import cn.hutool.core.util.StrUtil;
+
+import com.github.xiaoymin.knife4j.spring.gateway.Knife4jGatewayProperties;
 
 
 /**
@@ -52,7 +53,7 @@ public class Knife4jConfiguration implements WebFluxConfigurer {
      */
     @Bean
     public RouterFunction<ServerResponse> gatewaySwaggerRoute(final RouteDefinitionLocator routeDefinitionLocator) {
-        final List<Knife4jGatewayRoute> routes = new ArrayList<>();
+        final List<Knife4jGatewayProperties.Router> routes = new ArrayList<>();
 
         routeDefinitionLocator.getRouteDefinitions().subscribe(routeDefinition -> {
             final Optional<String> location =
@@ -62,7 +63,7 @@ public class Knife4jConfiguration implements WebFluxConfigurer {
                             predicateDefinition.getArgs().get("pattern"));
                         return pattern.replace("**", "v2/api-docs?group=" + routeDefinition.getUri().getHost());
                     }).findFirst();
-            final Knife4jGatewayRoute knife4jGatewayRoute = new Knife4jGatewayRoute();
+            final Knife4jGatewayProperties.Router knife4jGatewayRoute = new Knife4jGatewayProperties.Router();
             knife4jGatewayRoute.setOrder(routeDefinition.getOrder());
             knife4jGatewayRoute.setServiceName(routeDefinition.getId());
             knife4jGatewayRoute.setUrl(location.orElse(""));
@@ -74,15 +75,15 @@ public class Knife4jConfiguration implements WebFluxConfigurer {
     }
 
 
-    private List<Map<String, String>> build(final List<Knife4jGatewayRoute> routes) {
+    private List<Map<String, String>> build(final List<Knife4jGatewayProperties.Router> routes) {
         List<Map<String, String>> dataMaps = new ArrayList<>();
         if (routes != null && routes.size() > 0) {
             long count = routes.stream().filter(r -> r.getOrder() > 0).count();
             if (count > 0) {
                 // 排序
-                routes.sort(Comparator.comparing(Knife4jGatewayRoute::getOrder));
+                routes.sort(Comparator.comparing(Knife4jGatewayProperties.Router::getOrder));
             }
-            for (Knife4jGatewayRoute route : routes) {
+            for (Knife4jGatewayProperties.Router route : routes) {
                 Map<String, String> routeMap = new LinkedHashMap<>();
                 routeMap.put("name", route.getName());
                 routeMap.put("url", route.getUrl());
